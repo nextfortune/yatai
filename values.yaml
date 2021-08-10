@@ -6,6 +6,7 @@
 # configuration
 # (leave empty for SQLite)
 db_url: {}
+# postgresql://postgres:password123@yatai-postgres:5432/postgres
 
 # Base URL for storing saved BentoService bundle files,
 # this can be a filesystem path(POSIX/Windows), or an S3
@@ -17,8 +18,17 @@ yatai:
   replicaCount: 1 # only supports 1 at the moment
   image:
     repo: bentoml/yatai-service
-    version: 0.13.0
+    version: 0.13.1
     pullPolicy: IfNotPresent
+
+  args:
+    - name: db-url
+      value: postgresql://postgres:password123@yatai-postgres:5432/postgres
+    - name: repository-type
+      value: file_system
+    - name: file-system-directory
+      value: /bentoml/repository
+
 service:
   type: LoadBalancer
   ports:
@@ -39,7 +49,7 @@ service:
 
 # Local Postgres Service
 postgres:
-  enabled: false
+  enabled: true
   port: "5432"
   image:
     repo: postgres

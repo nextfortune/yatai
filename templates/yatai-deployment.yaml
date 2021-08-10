@@ -33,11 +33,8 @@ spec:
           readinessProbe:
             {{- toYaml .Values.service.readinessProbe | nindent 12 }}
           args:
-            {{ if .Values.db_url -}}
-            - "--db-url={{ .Values.db_url }}"
-            {{- end }}
-            {{ if .Values.repo_base_url -}}
-            - "--repo-base-url={{ .Values.repo_base_url}}"
+            {{- range $i, $config := .Values.yatai.args }}
+            - {{ printf "--%s=%s" $config.name $config.value | toString }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
