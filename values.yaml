@@ -26,8 +26,8 @@ yatai:
       value: postgresql://postgres:password123@yatai-postgres:5432/postgres
     - name: repository-type
       value: file_system
-    - name: file-system-directory
-      value: /bentoml/repository
+      #    - name: file-system-directory
+      #      value: /bentoml/repository
 
 service:
   type: LoadBalancer
